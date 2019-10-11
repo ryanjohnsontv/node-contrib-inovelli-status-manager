@@ -1,0 +1,12 @@
+{
+  "name": "node-contrib-inovelli-status-manager",
+  "version": "0.0.1",
+  "description": "Status manager node for inovelli switch",
+  "node-red" : {
+    "nodes": {
+        "inovelli-status-manager": "inovelli-status.js"
+    }
+  },
+  "author": "Phi Dong",
+  "license": "ISC"
+}
