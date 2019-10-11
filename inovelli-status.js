@@ -38,11 +38,12 @@ module.exports = function(RED) {
             size: 4,
             value
         }
-          
-          node.send({
-            ...msg,
-            payload: { data }
-          });
+        
+        node.status({ text: `Sent color: ${color}` });
+        node.send({
+          ...msg,
+          payload: { data }
+        });
       });
   }
   RED.nodes.registerType('inovelli-status-manager',InovelliStatusManager);
