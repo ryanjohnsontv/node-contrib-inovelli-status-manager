@@ -1,7 +1,8 @@
 {
   "name": "node-contrib-inovelli-status-manager",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Status manager node for inovelli switch",
+  "keywords": [ "node-red" ],
   "node-red" : {
     "nodes": {
         "inovelli-status-manager": "inovelli-status.js"
