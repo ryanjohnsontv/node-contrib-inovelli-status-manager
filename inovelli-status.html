@@ -1,7 +1,7 @@
 <script type="text/javascript">
     RED.nodes.registerType('inovelli-status-manager',{
         category: 'home assistant',
-        color: '#ed1c24',
+        color: '#B68181',
         defaults: {
             name: { value: '' },
             nodeid: { value: '' },
@@ -12,7 +12,8 @@
         },
         inputs:1,
         outputs:1,
-        icon: 'file.png',
+        icon: 'arrow-in.svg',
+        align: 'right',
         label: function() {
             return this.name || 'inovelli-status-manager';
         }
