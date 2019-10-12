@@ -32,8 +32,9 @@ module.exports = function(RED) {
           const display = (payload.display || presetDisplay) * 16777216;
           const nodeId = payload.nodeId || nodeid
           const value = color + level + duration + display;
+          const node_id = nodeId ? { node_id: nodeId } : {};
           const data = {
-            node_id: nodeId,
+            ...node_id,
             parameter: 8,
             size: 4,
             value
