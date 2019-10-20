@@ -1,17 +1,27 @@
 {
   "name": "node-contrib-inovelli-status-manager",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "repository": {
     "type": "git",
     "url": "https://github.com/pdong/node-contrib-inovelli-status-manager.git"
   },
   "description": "Status manager node for inovelli switch",
-  "keywords": [ "node-red" ],
-  "node-red" : {
+  "keywords": [
+    "node-red"
+  ],
+  "node-red": {
     "nodes": {
-        "inovelli-status-manager": "inovelli-status.js"
+      "inovelli-status-manager": "inovelli-status.js"
     }
   },
+  "scripts": {
+    "test": "mocha \"test/*.spec.js\""
+  },
   "author": "Phi Dong",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^6.2.2",
+    "node-red": "^1.0.2",
+    "node-red-node-test-helper": "^0.2.3"
+  }
 }
