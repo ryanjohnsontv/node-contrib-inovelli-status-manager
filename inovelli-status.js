@@ -16,7 +16,7 @@ module.exports = function(RED) {
       this.level = parseInt(level, 10);
       this.duration = duration;
       this.display = parseInt(display, 10);
-      this.switchtype = switchtype;
+      this.switchtype = parseInt(switchtype, 10);
 
       node.on('input', msg => {
           const { 
