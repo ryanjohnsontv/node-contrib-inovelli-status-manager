@@ -17,6 +17,18 @@
         align: 'right',
         label: function() {
             return this.name || 'inovelli-status-manager';
+        },
+        oneditprepare: function() {
+          $('#node-input-switchtype').on('change', function() {
+            $('#node-input-display').val("0");
+            if (this.value === '8') {
+              $('[data-switch="onOff"]').show();
+              $('[data-switch="dimmer"]').hide();
+            } else {
+              $('[data-switch="onOff"]').hide();
+              $('[data-switch="dimmer"]').show();
+            }
+          });
         }
     });
 </script>
@@ -65,9 +77,13 @@
       <select name="node-input-display" id="node-input-display">
         <option value="0">Off</option>
         <option value="1">Solid</option>
-        <option value="2">Fast Blink</option>
-        <option value="3">Slow Blink</option>
-        <option value="4">Pulse</option>
+        <option data-switch="onOff" value="2">Fast Blink</option>
+        <option data-switch="onOff" value="3">Slow Blink</option>
+        <option data-switch="onOff" value="4">Pulse</option>
+        <option data-switch="dimmer" value="2">Chase</option>
+        <option data-switch="dimmer" value="3">Fast Blink</option>
+        <option data-switch="dimmer" value="4">Slow Blink</option>
+        <option data-switch="dimmer" value="5">Pulse</option>
       </select>
     </div>
     <div class="form-row">
