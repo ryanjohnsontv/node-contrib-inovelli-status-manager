@@ -40,7 +40,6 @@ module.exports = function(RED) {
           const data = {
             ...node_id,
             parameter: switchtype,
-            size: 4,
             value
         }
         

@@ -25,7 +25,7 @@ describe('inovelli-status node', function () {
     });
   });
  
-  it('should always send parameter of 8 and size of 4', function (done) {
+  it('should always send parameter of 8', function (done) {
     var flow = [
       { id: "n1", type: "inovelli-status-manager", name: "inovelli-status-manager", wires:[["n2"]] },
       { id: "n2", type: "helper" }
@@ -35,7 +35,6 @@ describe('inovelli-status node', function () {
       var n1 = helper.getNode("n1");
       n2.on("input", function (msg) {
         assert.equal(msg.payload.data && msg.payload.data.parameter, 8);
-        assert.equal(msg.payload.data && msg.payload.data.size, 4);
         done();
       });    
       n1.receive({ payload: {} });
