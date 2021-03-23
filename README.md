@@ -1,4 +1,7 @@
 #### Inovelli Status Manager Node
+
+Forked from the exceptionally wonderful https://github.com/pdong/node-contrib-inovelli-status-manager repo.
+
 This node allows you to easily set the appropriate value to send to your Inovelli red series switch.
 
 It should be used in conjunction with the node-red–contrib-home-assistant add on and the output should
@@ -6,3 +9,15 @@ be connected to a api-call-service node that is set to do a `svc: zwave:set_conf
 from this node will get merged into the `svc: set_config_parameter`.
 
 If you notice any problems open an issue or a pull request.  Thanks.
+
+## To Do
+-   [ ] Adapt for Z-Wave JS use
+-   [x] Add color-convert to accept color names as input
+-   [x] Add support for LZW36 module
+
+## Installation
+```
+git clone https://github.com/ryanjohnsontv/node-contrib-inovelli-status-manager.git
+
+npm install node-contrib-inovelli-status-manager
+```
