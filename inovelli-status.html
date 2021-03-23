@@ -52,23 +52,23 @@
 
 <script type="text/x-red" data-template-name="inovelli-status-manager">
   <div class="form-row">
-      <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+      <label for="node-input-name"><i class="icon-tag"></i>Name</label>
       <input type="text" id="node-input-name" placeholder="Name">
   </div>
   <div class="form-row">
-    <label for="node-input-nodeid"><i class="icon-tag"></i> Node Id</label>
+    <label for="node-input-nodeid"><i class="icon-tag"></i>Node Id</label>
     <input type="number" id="node-input-nodeid" min="1">
   </div>
   <div class="form-row">
-    <label for="node-input-color"><i class="icon-tag"></i> Color</label>
+    <label for="node-input-color"><i class="icon-tag"></i>Color</label>
     <input type="color" id="node-input-color">
   </div>
   <div class="form-row">
-    <label for="node-input-level"><i class="icon-tag"></i> Level</label>
+    <label for="node-input-level"><i class="icon-tag"></i>Level</label>
     <input type="number" id="node-input-level" min="0" max="10">
   </div>
   <div class="form-row">
-    <label for="node-input-duration"><i class="icon-tag"></i> Duration</label>
+    <label for="node-input-duration"><i class="icon-tag"></i>Duration</label>
     <select name="node-input-duration" id="node-input-duration">
         <option value="0">Off</option>
         <option value="1">1 Second</option>
@@ -94,7 +94,7 @@
     </select>
   </div>
   <div class="form-row">
-    <label for="node-input-effect"><i class="icon-tag"></i> Effect Type</label>
+    <label for="node-input-effect"><i class="icon-tag"></i>Effect Type</label>
     <select name="node-input-effect" id="node-input-effect">
         <option value="0">Placeholder</option>
         <option value="1">Placeholder</option>
@@ -105,7 +105,7 @@
     </select>
   </div>
   <div class="form-row">
-    <label for="node-input-switchtype"><i class="icon-tag"></i> Switch Type</label>
+    <label for="node-input-switchtype"><i class="icon-tag"></i>Switch Type</label>
     <select name="node-input-switchtype" id="node-input-switchtype">
         <option value="8">On/Off (LZW30-SN)</option>
         <option value="16">Dimmer (LZW31-SN)</option>
@@ -116,24 +116,24 @@
 </script>
 
 <script type="text/x-red" data-help-name="inovelli-status-manager">
-  <p>This node will help construct the value for setting status on an Inovelli Red Series switch.  The output should be connected to a call service node with domain set to <strong>zwave</strong> (or <strong>ozw</strong>) and service set to <strong>set_config_parameter</strong>.</p>
+  <p>This node will help construct the value for setting status on an Inovelli Red Series switch. The output should be connected to a call service node with domain set to <strong>zwave</strong> (or <strong>ozw</strong>) and service set to <strong>set_config_parameter</strong>.</p>
   <dl class="message-properties">
-      <dt>Node Id <span class="property-type">number</span></dt>
+      <dt>Node Id<span class="property-type">number</span></dt>
       <dd>Z-wave node id of the inovelli switch you are trying to set status on</dd>
   
-      <dt class="optional">Color <span class="property-type">number</span></dt>
+      <dt class="optional">Color<span class="property-type">number</span></dt>
       <dd>Number of the color you want to display (1-255)</dd>
   
-      <dt class="optional">Level <span class="property-type">number</span></dt>
+      <dt class="optional">Level<span class="property-type">number</span></dt>
       <dd>Brightness of status light (1-10)</dd>
   
-      <dt class="optional">Duration <span class="property-type">number</span></dt>
+      <dt class="optional">Duration<span class="property-type">number</span></dt>
       <dd>Duration in seconds to display the notification.  (1-255) Note: Setting this to 255 will leave the status light on indefinitely.</dd>
   
-      <dt class="optional">Effect Type <span class="property-type">number</span></dt>
+      <dt class="optional">Effect Type<span class="property-type">number</span></dt>
       <dd>Determines how the status light will behave. (0 is Off, 1 is Solid, 2 is Fast Blink, 3 is Slow Blink, 4 is Pulse)</dd>
 
-      <dt class="optional">Switch Type <span class="property-type">radio</span></dt>
+      <dt class="optional">Switch Type<span class="property-type">radio</span></dt>
       <dd>Determines which parameter to set. (8 is for on/off switches, 16 is for dimmer switches, 24/25 if for combo light/fan switch)</dd>
   </dl>
   <p>
