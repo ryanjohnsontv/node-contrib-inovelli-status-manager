@@ -57,10 +57,8 @@ module.exports = function (RED) {
         node.error(`Incorrect Color: ${color}`);
       }
       var hsl = convert.rgb.hsl(rgb);
-      node.log(hsl);
       var keyword = convert.rgb.keyword(rgb);
       color = parseInt((hsl[0] * (17 / 24)).toFixed(0));
-      node.log(color);
       const level = (payload.level || presetLevel) * 255;
       const duration = (payload.duration || presetDuration) * 65536;
       const effect = (payload.effect || presetEffect) * 16777216;
