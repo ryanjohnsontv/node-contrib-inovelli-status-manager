@@ -60,12 +60,13 @@
     <input type="number" id="node-input-nodeid" min="1">
   </div>
   <div class="form-row">
-    <label for="node-input-color"><i class="icon-tag"></i>Color</label>
+    <label for="node-input-color"><i class="icon-tag"></i>Color (Hue Only!)</label>
     <input type="color" id="node-input-color">
   </div>
   <div class="form-row">
     <label for="node-input-level"><i class="icon-tag"></i>Brightness Level</label>
-    <input type="number" id="node-input-level" min="0" max="10">
+    <input type="range" id="node-input-level" min="0" max="10" oninput="num.value = this.value">
+    <output id="num"></output>
   </div>
   <div class="form-row">
     <label for="node-input-duration"><i class="icon-tag"></i>Duration</label>
