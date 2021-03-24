@@ -24,17 +24,16 @@ module.exports = function (RED) {
       const { payload } = msg;
 
       var color = payload.color || presetColor;
-      if (isNaN(parseInt(color)) === false) {
+      if (isNaN(parseInt(color)) === false && typeof color != "object") {
         color = parseInt(color);
       }
-      node.log(color);
       var rgb = [255, 0, 0];
       var inputconvert = function (color) {
         if (Array.isArray(color) && typeof color === "object") {
           if (color.length === 3) {
             rgb = color;
           } else {
-            node.log(color);
+            node.error(`Check your RGB values: ${color}`);
           }
         } else if (typeof color === "string") {
           if (color.startsWith("#") === true) {
@@ -48,14 +47,14 @@ module.exports = function (RED) {
             let conv_hsv = [color, 100, 100];
             rgb = convert.hsv.rgb(conv_hsv);
           } else {
-            node.error("Incorrect Hue Value", msg);
+            node.error(`Incorrect Hue Value: ${color}`);
           }
         }
         return rgb;
       };
       inputconvert(color);
       if (rgb === undefined) {
-        node.error("Incorrect Color", msg);
+        node.error(`Incorrect Color: ${color}`);
       }
       var hsl = convert.rgb.hsl(rgb);
       node.log(hsl);
