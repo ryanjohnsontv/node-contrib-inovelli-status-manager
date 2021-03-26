@@ -234,26 +234,26 @@
         <dt>Z-Wave Integration<span class="property-type">string</span></dt>
         <dd>Your Z-Wave integration used in Home Assistant (zwave_js or ozw)</dd>
 
-        <dt>Entity Id<span class="property-type">string</span></dt>
+        <dt>Entity Id<span class="property-type">string|list</span></dt>
         <dd>(For Z-Wave JS) Entity (or list of entities) to set the configuration parameter on</dd>
 
         <dt>Node Id<span class="property-type">number</span></dt>
-        <dd>(For OZW) Z-wave node id of the Inovelli switch you are trying to set status on</dd>
+        <dd>(For OZW) Node id of the Inovelli switch you are trying to configure</dd>
 
-        <dt class="optional">Switch Type<span class="property-type">radio</span></dt>
+        <dt class="optional">Switch Type<span class="property-type">number|string</span></dt>
         <dd>Determines which parameter to set. (8 is for on/off switches, 16 is for dimmers, 24/25 if for combo light/fan dimmers)</dd>
 
-        <dt class="optional">Color<span class="property-type">number|string</span></dt>
+        <dt class="optional">Color<span class="property-type">number|string|array</span></dt>
         <dd>Number of the color you want to display (accepts color names, RGB arrays, hexadeciaml and 0-360 hue values)</dd>
 
         <dt class="optional">Brightness Level<span class="property-type">number</span></dt>
         <dd>Brightness level of status light (0-10)</dd>
 
-        <dt class="optional">Duration<span class="property-type">number</span></dt>
-        <dd>Duration in seconds to display the notification.  (1-255) Note: Setting this to 255 will leave the status light on indefinitely.</dd>
+        <dt class="optional">Duration<span class="property-type">number|string</span></dt>
+        <dd>Duration to display the notification</dd>
 
-        <dt class="optional">Effect Type<span class="property-type">number</span></dt>
-        <dd>Determines how the status light will behave. (0 is Off, 1 is Solid, 2 is Fast Blink, 3 is Slow Blink, 4 is Pulse)</dd>
+        <dt class="optional">Effect<span class="property-type">number</span></dt>
+        <dd>Determines how the status light will behave. (Off, Solid, Chase, Fast Blink, Slow Blink, Pulse)</dd>
     </dl>
     <p>
       It is possible to override values set on this node by passing values in a payload e.g.
@@ -269,6 +269,9 @@
       switchtype: "combo_fan"
     }
   }
+
+  or
+
   msg = {
     payload: {
       zwave: ozw,
