@@ -164,10 +164,10 @@
   <div class="form-row">
     <label for="node-input-switchtype"><i class="icon-tag"></i>Switch Type</label>
     <select name="node-input-switchtype" id="node-input-switchtype">
-        <option value="8">On/Off (LZW30-SN)</option>
+        <option value="8">Switch (LZW30-SN)</option>
         <option value="16">Dimmer (LZW31-SN)</option>
-        <option value="24">Dimmer (LZW36-Light)</option>
-        <option value="25">Dimmer (LZW36-Fan)</option>
+        <option value="24">Light Dimmer (LZW36)</option>
+        <option value="25">Fan Dimmer (LZW36)</option>
     </select>
   </div>
   <div class="form-row color-input">
@@ -198,9 +198,14 @@
         <option value="8">8 Seconds</option>
         <option value="9">9 Seconds</option>
         <option value="10">10 Seconds</option>
+        <option value="15">15 Seconds</option>
+        <option value="30">30 Seconds</option>
+        <option value="45">45 Seconds</option>
+        <option value="60">1 Minute</option>
         <option value="62">2 Minutes</option>
         <option value="63">3 Minutes</option>
         <option value="64">4 Minutes</option>
+        <option value="65">5 Minutes</option>
         <option value="70">10 Minutes</option>
         <option value="75">15 Minutes</option>
         <option value="90">30 Minutes</option>
@@ -236,10 +241,10 @@
         <dd>(For OZW) Z-wave node id of the Inovelli switch you are trying to set status on</dd>
 
         <dt class="optional">Switch Type<span class="property-type">radio</span></dt>
-        <dd>Determines which parameter to set. (8 is for on/off switches, 16 is for dimmer switches, 24/25 if for combo light/fan switch)</dd>
+        <dd>Determines which parameter to set. (8 is for on/off switches, 16 is for dimmers, 24/25 if for combo light/fan dimmers)</dd>
 
         <dt class="optional">Color<span class="property-type">number|string</span></dt>
-        <dd>Number of the color you want to display (accepts color names, RGB arrays, and 0-360 hue values)</dd>
+        <dd>Number of the color you want to display (accepts color names, RGB arrays, hexadeciaml and 0-360 hue values)</dd>
 
         <dt class="optional">Brightness Level<span class="property-type">number</span></dt>
         <dd>Brightness level of status light (0-10)</dd>
@@ -254,15 +259,26 @@
       It is possible to override values set on this node by passing values in a payload e.g.
       <pre>
   msg = {
-  payload: {
-    zwave: zwave_js,
-    entity_id: "light.living_room",
-    color: "Red",
-    duration: 10,
-    effect: "Slow Blink",
-    level: 10,
-    switchtype: 24
+    payload: {
+      zwave: zwave_js,
+      entity_id: "light.bedroom",
+      color: "Red",
+      duration: "10 Seconds",
+      effect: "Slow Blink",
+      brightness: 10,
+      switchtype: "combo_fan"
+    }
   }
+  msg = {
+    payload: {
+      zwave: ozw,
+      node_id: 13,
+      color: [255,0,00],
+      duration: 10,
+      effect: 3,
+      brightness: 10,
+      switchtype: 25
+    }
   }
       </pre>
     </p>
