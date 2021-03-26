@@ -10,7 +10,7 @@ be connected to an api-call-service node. This node will automatically fill in t
 If you notice any problems open an issue or a pull request.  Thanks!
 
 ## To Do
--   [ ] Adapt for Z-Wave JS use
+-   [x] Adapt for Z-Wave JS use
 -   [x] Allow all fields to be controlled by the payload of an incoming message
 -   [x] Add color-convert to accept color names as input
 -   [x] Automatically convert input values to proper format (ie. "2 Hours" = 168 for Inovelli math)
@@ -23,5 +23,7 @@ If you notice any problems open an issue or a pull request.  Thanks!
 git clone https://github.com/ryanjohnsontv/node-contrib-inovelli-status-manager.git
 
 npm install node-contrib-inovelli-status-manager
+
+reboot
 ```
 **For supervised installations I recommend adding the add-on "SSH & Web Terminal", add '- npm' as a package in the configuration for this add-on, then navigate to the Node-RED directory (```cd config/node-red```) and follow the above installation instructions.
