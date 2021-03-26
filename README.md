@@ -5,14 +5,15 @@ Forked from the exceptionally wonderful https://github.com/pdong/node-contrib-in
 This node allows you to easily set the appropriate value to send to your Inovelli red series switch.
 
 It should be used in conjunction with the node-red–contrib-home-assistant add on and the output should
-be connected to a api-call-service node that is set to do a `svc: zwave:set_config_parameter`.  The values
-from this node will get merged into the `svc: set_config_parameter`.
+be connected to an api-call-service node. This node will automatically fill in the appropriate fields for that node.
 
-If you notice any problems open an issue or a pull request.  Thanks.
+If you notice any problems open an issue or a pull request.  Thanks!
 
 ## To Do
 -   [ ] Adapt for Z-Wave JS use
+-   [x] Allow all fields to be controlled by the payload of an incoming message
 -   [x] Add color-convert to accept color names as input
+-   [x] Automatically convert input values to proper format (ie. "2 Hours" = 168 for Inovelli math)
 -   [x] Detect color input to properly convert to Inovelli's hue range
 -   [x] Standardize color and brightness level selectors in UI
 -   [x] Add support for LZW36 module
