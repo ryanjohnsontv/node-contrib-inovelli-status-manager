@@ -146,7 +146,6 @@ module.exports = function (RED) {
       duration = inputDurationConvert(duration);
       effect = inputEffectConvert(effect, switchtype);
 
-
       const hsl = convert.rgb.hsl(rgb);
       const keyword = convert.rgb.keyword(rgb);
       color = parseInt((hsl[0] * (17 / 24)).toFixed(0));
@@ -154,7 +153,7 @@ module.exports = function (RED) {
         const value = color + (brightness * 255) + (duration * 65536) + (effect * 16777216);
         if (zwave === "zwave_js") {
           const entityId = payload.entity_id || entityid;
-          const entity_id = entityId ? { target: { entity_id: entityId } } : {};
+          const entity_id = entityId ? { entity_id: entityId } : {};
           node.send({
             ...msg,
             payload: { data: { ...entity_id, parameter: switchtype, value } }
