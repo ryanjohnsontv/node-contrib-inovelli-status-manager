@@ -65,6 +65,7 @@ module.exports = function (RED) {
 
       var inputSwitchConvert = function (switchtype) {
         if (isNaN(switchtype)) {
+          switchtype = switchtype.toLowerCase();
           const switchType = {
             "switch": 8,
             "dimmer": 16,
@@ -114,20 +115,21 @@ module.exports = function (RED) {
 
       var inputEffectConvert = function (effect, switchtype) {
         if (isNaN(effect)) {
+          effect = effect.toLowerCase();
           const switchOptions = {
-            "Off": 0,
-            "Solid": 1,
-            "Fast Blink": 2,
-            "Slow Blink": 3,
-            "Pulse": 4
+            "off": 0,
+            "solid": 1,
+            "fast blink": 2,
+            "slow blink": 3,
+            "pulse": 4
           };
           const dimmerOptions = {
-            "Off": 0,
-            "Solid": 1,
-            "Chase": 2,
-            "Fast Blink": 3,
-            "Slow Blink": 4,
-            "Pulse": 5
+            "off": 0,
+            "solid": 1,
+            "chase": 2,
+            "fast blink": 3,
+            "slow blink": 4,
+            "pulse": 5
           };
           if (switchtype === 8 && switchOptions[effect] !== undefined) {
             effect = switchOptions[effect];
