@@ -154,29 +154,22 @@ module.exports = function (RED) {
       const keyword = convert.rgb.keyword(rgb);
       color = parseInt((hsl[0] * (17 / 24)).toFixed(0));
       if (error === 0) {
+        const value = color + (level * 255) + (duration * 65536) + (effect * 16777216);
         if (zwave === "zwave_js") {
-          const entity_id = payload.entity_id || entityid;
-          if (entity_id === undefined || entity_id === "") {
+          const entityId = payload.entity_id || entityid;
+          const entity_id = entityId ? { target : { entity_id: entityId }} : {};
             node.send({
               ...msg,
-              payload: { data: { parameter: switchtype, value: level } }
+              payload: { data: {...entity_id, parameter: switchtype, value } }
             });
-          } else {
-            node.send({
-              ...msg,
-              payload: { target:{ entity_id }, data: { parameter: switchtype, value: level } }
-            });
-          }
         } else if (zwave === "ozw") {
-          const value = color + (level * 255) + (duration * 65536) + (effect * 16777216);
           const nodeId = payload.node_id || nodeid;
           const node_id = nodeId ? { node_id: nodeId } : {};
           node.send({
             ...msg,
-            payload: { data: {...node_id, parameter: switchtype, value} },
+            payload: { data: {...node_id, parameter: switchtype, value } },
           });
-        }
-
+        };
         node.status({ text: `Sent color: ${keyword}` });
       } else {
         node.status({ text: `Error! Check debug window for more info` });
