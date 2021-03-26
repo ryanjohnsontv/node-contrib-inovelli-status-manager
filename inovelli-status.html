@@ -8,7 +8,7 @@
       entityid: { value: "" },
       zwave: { value: "zwave_js" },
       color: { value: 0 },
-      level: { value: 5 },
+      brightness: { value: 5 },
       duration: { value: 10 },
       effect: { value: 4 },
       switchtype: { value: 8 },
@@ -67,12 +67,12 @@
           colorOutput.innerHTML = this.value;
         }
       });
-      $("#node-input-level").change(function () {
-        var level = document.getElementById("node-input-level");
-        var levelOutput = document.getElementById("levelOutput");
-        levelOutput.innerHTML = level.value;
-        level.oninput = function() {
-          levelOutput.innerHTML = this.value;
+      $("#node-input-brightness").change(function () {
+        var brightness = document.getElementById("node-input-brightness");
+        var brightnessOutput = document.getElementById("brightnessOutput");
+        brightnessOutput.innerHTML = brightness.value;
+        brightness.oninput = function() {
+          brightnessOutput.innerHTML = this.value;
         }
       });
     },
@@ -111,7 +111,7 @@
       border-radius: 50%;
       background:	#FFFFFF;
     }
-    .level-picker {
+    .brightness-picker {
       -webkit-appearance: none;
       appearance: none;
       width: 100%;
@@ -120,14 +120,14 @@
       background: linear-gradient(to right, rgb(0,0,0), rgb(255,255,255));
       outline: none;
     }
-    .level-input input {
+    .brightness-input input {
       width: 100% !important;
     }
-    .level-picker-input {
+    .brightness-picker-input {
       display: inline-block;
       width: 70%;
     }
-    .level-picker::-webkit-slider-thumb {
+    .brightness-picker::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
       width: 25px;
@@ -135,7 +135,7 @@
       border-radius: 50%;
       background: #FFFFFF;
     }
-    .level-picker::-moz-range-thumb {
+    .brightness-picker::-moz-range-thumb {
       width: 25px;
       height: 25px;
       border-radius: 50%;
@@ -177,12 +177,12 @@
     </div>
     <output id="colorOutput"></output>
   </div>
-  <div class="form-row level-input">
-    <label for="node-input-level"><i class="icon-tag"></i>Brightness Level</label>
-    <div class="level-picker-input">
-      <input type="range" id="node-input-level" min="0" max="10" class="level-picker" oninput="level.value = this.value">
+  <div class="form-row brightness-input">
+    <label for="node-input-brightness"><i class="icon-tag"></i>Brightness Level</label>
+    <div class="brightness-picker-input">
+      <input type="range" id="node-input-brightness" min="0" max="10" class="brightness-picker" oninput="brightness.value = this.value">
     </div>
-    <output id="levelOutput"></output>
+    <output id="brightnessOutput"></output>
   </div>
   <div class="form-row">
     <label for="node-input-duration"><i class="icon-tag"></i>Duration</label>
@@ -240,19 +240,19 @@
         <dt>Node Id<span class="property-type">number</span></dt>
         <dd>(For OZW) Node id of the Inovelli switch you are trying to configure</dd>
 
-        <dt class="optional">Switch Type<span class="property-type">number|string</span></dt>
+        <dt>Switch Type<span class="property-type">number|string</span></dt>
         <dd>Determines which parameter to set. (8 is for on/off switches, 16 is for dimmers, 24/25 if for combo light/fan dimmers)</dd>
 
-        <dt class="optional">Color<span class="property-type">number|string|array</span></dt>
+        <dt>Color<span class="property-type">number|string|array</span></dt>
         <dd>Number of the color you want to display (accepts color names, RGB arrays, hexadeciaml and 0-360 hue values)</dd>
 
-        <dt class="optional">Brightness Level<span class="property-type">number</span></dt>
+        <dt>Brightness Level<span class="property-type">number</span></dt>
         <dd>Brightness level of status light (0-10)</dd>
 
-        <dt class="optional">Duration<span class="property-type">number|string</span></dt>
+        <dt>Duration<span class="property-type">number|string</span></dt>
         <dd>Duration to display the notification</dd>
 
-        <dt class="optional">Effect<span class="property-type">number</span></dt>
+        <dt>Effect<span class="property-type">number</span></dt>
         <dd>Determines how the status light will behave. (Off, Solid, Chase, Fast Blink, Slow Blink, Pulse)</dd>
     </dl>
     <p>
