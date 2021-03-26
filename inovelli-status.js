@@ -153,17 +153,29 @@ module.exports = function (RED) {
       const keyword = convert.rgb.keyword(rgb);
       color = parseInt((hsl[0] * (17 / 24)).toFixed(0));
       if (error === 0) {
-        const value = color + (brightness * 255) + (duration * 65536) + (effect * 16777216);
         switch (zwave) {
           case "zwave_js":
             const entityId = payload.entity_id || entityid;
             const entity_id = entityId ? { entity_id: entityId } : {};
             node.send({
               ...msg,
-              payload: { domain: zwave, service: "set_config_parameter", data: { ...entity_id, parameter: switchtype, value } }
+              payload: { domain: zwave, service: "set_config_parameter", data: { ...entity_id, parameter: switchtype, value: color, bitmask: 255 } }
+            });
+            node.send({
+              ...msg,
+              payload: { domain: zwave, service: "set_config_parameter", data: { ...entity_id, parameter: switchtype, value: brightness, bitmask: 65280 } }
+            });
+            node.send({
+              ...msg,
+              payload: { domain: zwave, service: "set_config_parameter", data: { ...entity_id, parameter: switchtype, value: duration, bitmask: 16711680 } }
+            });
+            node.send({
+              ...msg,
+              payload: { domain: zwave, service: "set_config_parameter", data: { ...entity_id, parameter: switchtype, value: effect, bitmask: 2130706432 } }
             });
             break;
           case "ozw":
+            const value = color + (brightness * 255) + (duration * 65536) + (effect * 16777216);
             const nodeId = payload.node_id || nodeid;
             const node_id = nodeId ? { node_id: nodeId } : {};
             node.send({
