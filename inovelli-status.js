@@ -74,9 +74,12 @@ module.exports = function (RED) {
           let switchConvert = switchType[switchtype];
           if (switchConvert !== undefined) {
             switchtype = switchConvert;
+          } else {
+            node.error(`Incorrect Switch Type: ${switchtype}`);
+            error++
           }
         } else if (![8, 16, 24, 25].includes(switchtype)) {
-          node.error(`Incorrect Switch Type: ${switchtype}`);
+          node.error(`Incorrect Switch Value: ${switchtype}`);
           error++
         }
         return switchtype;
