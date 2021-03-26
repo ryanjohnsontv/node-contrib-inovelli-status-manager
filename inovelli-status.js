@@ -3,8 +3,10 @@ module.exports = function (RED) {
   function InovelliStatusManager(config) {
     RED.nodes.createNode(this, config);
     var node = this;
-    const { nodeid, color, level, duration, effect, switchtype } = config;
+    const { zwave, entityid, nodeid, color, level, duration, effect, switchtype } = config;
 
+    this.zwave = zwave;
+    this.entityid = entityid;
     this.nodeid = parseInt(nodeid, 10);
     this.color = color;
     this.level = parseInt(level, 10);
@@ -14,6 +16,8 @@ module.exports = function (RED) {
 
     node.on("input", (msg) => {
       const {
+        zwave: presetZwave,
+        entityid,
         nodeid,
         color: presetColor,
         level: presetLevel,
@@ -56,27 +60,38 @@ module.exports = function (RED) {
       if (rgb === undefined) {
         node.error(`Incorrect Color: ${color}`);
       }
-      var hsl = convert.rgb.hsl(rgb);
-      var keyword = convert.rgb.keyword(rgb);
+      const hsl = convert.rgb.hsl(rgb);
+      const keyword = convert.rgb.keyword(rgb);
       color = parseInt((hsl[0] * (17 / 24)).toFixed(0));
-      const level = (payload.level || presetLevel) * 255;
-      const duration = (payload.duration || presetDuration) * 65536;
-      const effect = (payload.effect || presetEffect) * 16777216;
+      const level = payload.level || presetLevel;
+      const duration = payload.duration || presetDuration;
+      const effect = payload.effect || presetEffect;
+      const zwave = payload.zwave || presetZwave;
       const switchtype = payload.switchtype || presetSwitchtype;
-      const nodeId = payload.nodeId || nodeid;
-      const value = color + level + duration + effect;
-      const node_id = nodeId ? { node_id: nodeId } : {};
-      const data = {
-        ...node_id,
-        parameter: switchtype,
-        value,
-      };
+      if (zwave === "zwave_js") {
+        const entity_id = payload.entity_id || entityid;
+        if (entity_id === undefined || entity_id === "") {
+          node.send({
+            ...msg,
+            payload: { data:{parameter: switchtype,value: level} }
+          });
+        } else {
+          node.send({
+            ...msg,
+            payload: { target:{ entity_id }, data:{parameter: switchtype,value: level} }
+          });
+        }
+      } else if (zwave === "ozw") {
+        const value = color + (level * 255) + (duration * 65536) + (effect * 16777216);
+        const nodeId = payload.node_id || nodeid;
+        const node_id = nodeId ? { node_id: nodeId } : {};
+        node.send({
+          ...msg,
+          payload: { ...node_id, parameter: switchtype, value },
+        });
+      }
 
       node.status({ text: `Sent color: ${keyword}` });
-      node.send({
-        ...msg,
-        payload: { data },
-      });
     });
   }
   RED.nodes.registerType("inovelli-status-manager", InovelliStatusManager);

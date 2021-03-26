@@ -5,10 +5,12 @@
     defaults: {
       name: { value: "" },
       nodeid: { value: "" },
+      entityid: { value: "" },
+      zwave: { value: "zwave_js" },
       color: { value: 0 },
       level: { value: 5 },
       duration: { value: 10 },
-      effect: { value: 0 },
+      effect: { value: 4 },
       switchtype: { value: 8 },
     },
     inputs: 1,
@@ -19,7 +21,6 @@
       return this.name || "inovelli-status-manager";
     },
     oneditprepare: function () {
-      let previous;
       const onOffOptions = `<option value="0">Off</option>
           <option value="1">Solid</option>
           <option value="2">Fast Blink</option>
@@ -33,8 +34,22 @@
           <option value="4">Slow Blink</option>
           <option value="5">Pulse</option>`;
 
-      $("#node-input-switchtype").on("change", function () {
+      $("#node-input-zwave").change(function () {
+        var zwave = $("#node-input-zwave").val();
+        switch (zwave) {
+          case "zwave_js":
+            $(".nodeid-input").hide();
+            $(".entityid-input").show();
+            break;
+          case "ozw":
+            $(".nodeid-input").show();
+            $(".entityid-input").hide();
+            break;
+        }
+      });
+      $("#node-input-switchtype").change(function () {
         const effectInput = $("#node-input-effect");
+        let previous;
         if (previous) previous = "0";
         if (!previous) previous = effectInput.val();
         if (this.value === "8") {
@@ -44,7 +59,7 @@
         }
         effectInput.val(previous);
       });
-      $("#node-input-color").on("change", function () {
+      $("#node-input-color").change(function () {
         var color = document.getElementById("node-input-color");
         var colorOutput = document.getElementById("colorOutput");
         colorOutput.innerHTML = color.value;
@@ -52,7 +67,7 @@
           colorOutput.innerHTML = this.value;
         }
       });
-      $("#node-input-level").on("change", function () {
+      $("#node-input-level").change(function () {
         var level = document.getElementById("node-input-level");
         var levelOutput = document.getElementById("levelOutput");
         levelOutput.innerHTML = level.value;
@@ -81,6 +96,20 @@
     .color-picker-input {
       display: inline-block;
       width: 70%;
+    }
+    .color-picker::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: #FFFFFF;
+    }
+    .color-picker::-moz-range-thumb {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background:	#FFFFFF;
     }
     .level-picker {
       -webkit-appearance: none;
@@ -118,8 +147,28 @@
       <input type="text" id="node-input-name" placeholder="Name">
   </div>
   <div class="form-row">
+    <label for="node-input-zwave"><i class="icon-tag"></i>Z-Wave Integration</label>
+    <select name="node-input-zwave" id="node-input-zwave">
+        <option value="zwave_js">Z-Wave JS</option>
+        <option value="ozw">OZW 1.6</option>
+    </select>
+  </div>
+  <div class="form-row nodeid-input">
     <label for="node-input-nodeid"><i class="icon-tag"></i>Node Id</label>
     <input type="number" id="node-input-nodeid" min="1">
+  </div>
+  <div class="form-row entityid-input">
+    <label for="node-input-entityid"><i class="icon-tag"></i>Entity Id</label>
+    <input type="text" id="node-input-entityid">
+  </div>
+  <div class="form-row">
+    <label for="node-input-switchtype"><i class="icon-tag"></i>Switch Type</label>
+    <select name="node-input-switchtype" id="node-input-switchtype">
+        <option value="8">On/Off (LZW30-SN)</option>
+        <option value="16">Dimmer (LZW31-SN)</option>
+        <option value="24">Dimmer (LZW36-Light)</option>
+        <option value="25">Dimmer (LZW36-Fan)</option>
+    </select>
   </div>
   <div class="form-row color-input">
     <label for="node-input-color"><i class="icon-tag"></i>Color</label>
@@ -129,7 +178,7 @@
     <output id="colorOutput"></output>
   </div>
   <div class="form-row level-input">
-    <label for="node-input-level"><i class="icon-tag"></i>Brightness</label>
+    <label for="node-input-level"><i class="icon-tag"></i>Brightness Level</label>
     <div class="level-picker-input">
       <input type="range" id="node-input-level" min="0" max="10" class="level-picker" oninput="level.value = this.value">
     </div>
@@ -172,44 +221,42 @@
         <option value="5">Placeholder</option>
     </select>
   </div>
-  <div class="form-row">
-    <label for="node-input-switchtype"><i class="icon-tag"></i>Switch Type</label>
-    <select name="node-input-switchtype" id="node-input-switchtype">
-        <option value="8">On/Off (LZW30-SN)</option>
-        <option value="16">Dimmer (LZW31-SN)</option>
-        <option value="24">Dimmer (LZW36-Light)</option>
-        <option value="25">Dimmer (LZW36-Fan)</option>
-    </select>
-  </div>
 </script>
 
 <script type="text/x-red" data-help-name="inovelli-status-manager">
     <p>This node will help construct the value for setting status on an Inovelli Red Series switch. The output should be connected to a call service node with domain set to <strong>zwave</strong> (or <strong>ozw</strong>) and service set to <strong>set_config_parameter</strong>.</p>
     <dl class="message-properties">
-        <dt>Node Id<span class="property-type">number</span></dt>
-        <dd>Z-wave node id of the inovelli switch you are trying to set status on</dd>
+        <dt>Z-Wave Integration<span class="property-type">string</span></dt>
+        <dd>Your Z-Wave integration used in Home Assistant (zwave_js or ozw)</dd>
 
-        <dt class="optional">Color<span class="property-type">number</span></dt>
-        <dd>Number of the color you want to display (1-255)</dd>
+        <dt>Entity Id<span class="property-type">string</span></dt>
+        <dd>(For Z-Wave JS) Entity (or list of entities) to set the configuration parameter on</dd>
+
+        <dt>Node Id<span class="property-type">number</span></dt>
+        <dd>(For OZW) Z-wave node id of the Inovelli switch you are trying to set status on</dd>
+
+        <dt class="optional">Switch Type<span class="property-type">radio</span></dt>
+        <dd>Determines which parameter to set. (8 is for on/off switches, 16 is for dimmer switches, 24/25 if for combo light/fan switch)</dd>
+
+        <dt class="optional">Color<span class="property-type">number|string</span></dt>
+        <dd>Number of the color you want to display (accepts color names, RGB arrays, and 0-360 hue values)</dd>
 
         <dt class="optional">Brightness Level<span class="property-type">number</span></dt>
-        <dd>Brightness level of status light (1-10)</dd>
+        <dd>Brightness level of status light (0-10)</dd>
 
         <dt class="optional">Duration<span class="property-type">number</span></dt>
         <dd>Duration in seconds to display the notification.  (1-255) Note: Setting this to 255 will leave the status light on indefinitely.</dd>
 
         <dt class="optional">Effect Type<span class="property-type">number</span></dt>
         <dd>Determines how the status light will behave. (0 is Off, 1 is Solid, 2 is Fast Blink, 3 is Slow Blink, 4 is Pulse)</dd>
-
-        <dt class="optional">Switch Type<span class="property-type">radio</span></dt>
-        <dd>Determines which parameter to set. (8 is for on/off switches, 16 is for dimmer switches, 24/25 if for combo light/fan switch)</dd>
     </dl>
     <p>
       It is possible to override values set on this node by passing values in a payload e.g.
       <pre>
   msg = {
   payload: {
-    nodeId: 20,
+    zwave: zwave_js,
+    entity_id: "light.living_room",
     color: "Red",
     duration: 10,
     effect: "Slow Blink",
