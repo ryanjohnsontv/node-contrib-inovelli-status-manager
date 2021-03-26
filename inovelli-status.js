@@ -151,21 +151,24 @@ module.exports = function (RED) {
       color = parseInt((hsl[0] * (17 / 24)).toFixed(0));
       if (error === 0) {
         const value = color + (brightness * 255) + (duration * 65536) + (effect * 16777216);
-        if (zwave === "zwave_js") {
-          const entityId = payload.entity_id || entityid;
-          const entity_id = entityId ? { entity_id: entityId } : {};
-          node.send({
-            ...msg,
-            payload: { data: { ...entity_id, parameter: switchtype, value } }
-          });
-        } else if (zwave === "ozw") {
-          const nodeId = payload.node_id || nodeid;
-          const node_id = nodeId ? { node_id: nodeId } : {};
-          node.send({
-            ...msg,
-            payload: { data: { ...node_id, parameter: switchtype, value } },
-          });
-        };
+        switch (zwave) {
+          case "zwave_js":
+            const entityId = payload.entity_id || entityid;
+            const entity_id = entityId ? { entity_id: entityId } : {};
+            node.send({
+              ...msg,
+              payload: { domain: zwave, service: "set_config_parameter", data: { ...entity_id, parameter: switchtype, value } }
+            });
+            break;
+          case "ozw":
+            const nodeId = payload.node_id || nodeid;
+            const node_id = nodeId ? { node_id: nodeId } : {};
+            node.send({
+              ...msg,
+              payload: { domain: zwave, service: "set_config_parameter", data: { ...node_id, parameter: switchtype, value } },
+            });
+            break;
+        }
         node.status({ text: `Sent color: ${keyword}` });
       } else {
         node.status({ text: `Error! Check debug window for more info` });
