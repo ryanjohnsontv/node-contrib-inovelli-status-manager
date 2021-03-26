@@ -13,6 +13,8 @@ If you notice any problems open an issue or a pull request.  Thanks.
 ## To Do
 -   [ ] Adapt for Z-Wave JS use
 -   [x] Add color-convert to accept color names as input
+-   [x] Detect color input to properly convert to Inovelli's hue range
+-   [x] Standardize color and brightness level selectors in UI
 -   [x] Add support for LZW36 module
 
 ## Installation
