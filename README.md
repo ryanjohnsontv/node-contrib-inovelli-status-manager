@@ -10,7 +10,7 @@ be connected to an api-call-service node. This node will automatically fill in t
 If you notice any problems open an issue or a pull request.  Thanks!
 
 ## To Do
--   [x] Adapt for Z-Wave JS use
+-   [x] Adapt for Z-Wave JS use (Requires Home Assistant 2021.4.0 or newer)
 -   [x] Allow all fields to be controlled by the payload of an incoming message
 -   [x] Add color-convert to accept color names as input
 -   [x] Automatically convert input values to proper format (ie. "2 Hours" = 168 for Inovelli math)
