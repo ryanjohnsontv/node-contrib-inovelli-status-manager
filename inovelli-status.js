@@ -159,21 +159,13 @@ module.exports = function (RED) {
           case "zwave_js":
             const entityId = payload.entity_id || entityid;
             const entity_id = entityId ? { entity_id: entityId } : {};
+            const color_value = color ? { 255: color } : {};
+            const brightness_value = brightness ? { 65280: brightness } : {};
+            const duration_value = duration ? { 16711680: duration } : {};
+            const effect_value = effect ? { 2130706432 : effect } : {};
             node.send({
               ...msg,
-              payload: { domain: zwave, service: "set_config_parameter", data: { ...entity_id, parameter: switchtype, value: color, bitmask: 255 } }
-            });
-            node.send({
-              ...msg,
-              payload: { domain: zwave, service: "set_config_parameter", data: { ...entity_id, parameter: switchtype, value: brightness, bitmask: 65280 } }
-            });
-            node.send({
-              ...msg,
-              payload: { domain: zwave, service: "set_config_parameter", data: { ...entity_id, parameter: switchtype, value: duration, bitmask: 16711680 } }
-            });
-            node.send({
-              ...msg,
-              payload: { domain: zwave, service: "set_config_parameter", data: { ...entity_id, parameter: switchtype, value: effect, bitmask: 2130706432 } }
+              payload: { domain: zwave, service: "bulk_set_partial_config_parameters", data: { ...entity_id, parameter: switchtype, value: { ...color_value, ...brightness_value, ...duration_value, ...effect_value } } }
             });
             break;
           case "ozw":
