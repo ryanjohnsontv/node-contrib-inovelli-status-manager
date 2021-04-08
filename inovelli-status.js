@@ -60,6 +60,11 @@ module.exports = function (RED) {
         } else {
           node.error(`Incorrect Color: ${color}. Using default color: Red`);
         }
+        if (rgb === undefined) {
+          node.error(`Incorrect Color: ${color}. Using preset color value: ${presetColor}`);
+          let conv_hsv = [presetColor, 100, 100];
+          rgb = convert.hsv.rgb(conv_hsv);
+        }
         return rgb;
       };
 
